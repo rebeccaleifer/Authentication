@@ -93,6 +93,34 @@ nav a {
     }
 
 
+    nav button {
+        color: #459BDF;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 14px;
+    }
+
+    nav button:hover {
+        color: #3171F6;
+        text-decoration: none;
+    }
+
+    nav button:before {
+        content: '';
+        display: block;
+        height: 5px;
+        background-color: #459BDF;
+        position: absolute;
+        top: 0;
+        width: 0%;
+        transition: all ease-in-out 235ms;
+    }
+
+    nav button:hover:before {
+        width: 100%;
+    }
+
+
 /*END NEW STUFF*/
 #footer {
     position: fixed;

@@ -4,7 +4,6 @@
 
 @model PredictionViewModel
 
-<div class="container text-center rounded shadow-lg" style="background-color: white; padding: 30px;">
     <form method="post" asp-controller="Inference" asp-action="Score">
         <div class="container text-center rounded shadow-lg" style="background-color: white; padding-top: 20px; padding-bottom: 10px; width: 60%;">
             <h2>Predict the Severity of a Crash</h2>
@@ -14,7 +13,7 @@
                 <li style="list-style: none;">2: Possible injury</li>
                 <li style="list-style: none;">3: Suspected minor injury</li>
                 <li style="list-style: none;">4: Suspected serious injury</li>
-                <li style="list-style: none;">5: Fatal</li>
+                <li style="list-style: none;">5+: Fatal</li>
             </ul>
         </div>
         <br /><br />
@@ -133,7 +132,4 @@
         </div>
     </form>
     <br />
-</div>
-<br /><br /><br />
-
-
+<br />

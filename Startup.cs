@@ -48,23 +48,16 @@ namespace Authentication
                     options.ClientSecret = googleAuthNSection["ClientSecret"];
                 });
 
-            //I HOPE THIS WORKS...
             services.AddDbContext<CrashDbContext>(options =>
 
                 options.UseMySql(Configuration.GetConnectionString("CrashDataDbConnection"))
             );
-
 
             //services.AddIdentity<IdentityUser, IdentityRole>()
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(Configuration["ConnectionStrings: ApplicationDataDbConnection"]));
-                
-            //services.AddDbContext<ApplicationDbContext>(options =>
-
-            //    options.UseMySql(Configuration.GetConnectionString("ApplicationDataDbConnection"))
-            //);
 
             services.AddControllersWithViews();
             //services.AddRazorPages();
@@ -72,9 +65,7 @@ namespace Authentication
             //TESTING THIS OUT JK THIS ACTUALLY WORKS, DON'T DELETE
             services.AddRazorPages(options =>
             {
-                //options.Conventions.AuthorizePage("/Contact");
                 options.Conventions.AuthorizeFolder("/Admin");
-                //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
                 options.Conventions.AllowAnonymousToFolder("/Views/");
             });
 
@@ -85,15 +76,23 @@ namespace Authentication
             services.AddSingleton<InferenceSession>(
                 new InferenceSession("Models/utah_crash_severity.onnx")
             );
+
+            //THIS IS A TEST
+            services.AddAuthorization(options =>
+                options.AddPolicy("TwoFactorEnabled", x => x.RequireClaim("amr", "mfa")));
         }
         // NEW STUFF (I HOPE THIS WORKS)
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+
+            //This redirects HTTP traffic to HTTPS :)
+            app.UseHttpsRedirection();
+
 
             app.UseStaticFiles();
 
