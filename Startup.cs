@@ -54,13 +54,31 @@ namespace Authentication
                 options.UseMySql(Configuration.GetConnectionString("CrashDataDbConnection"))
             );
 
-            services.AddDbContext<ApplicationDbContext>(options =>
 
-                options.UseMySql(Configuration.GetConnectionString("CrashDataDbConnection"))
-            );
+            //services.AddIdentity<IdentityUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseMySql(Configuration["ConnectionStrings: ApplicationDataDbConnection"]));
+                
+            //services.AddDbContext<ApplicationDbContext>(options =>
+
+            //    options.UseMySql(Configuration.GetConnectionString("ApplicationDataDbConnection"))
+            //);
 
             services.AddControllersWithViews();
-            services.AddRazorPages();
+            //services.AddRazorPages();
+
+            //TESTING THIS OUT JK THIS ACTUALLY WORKS, DON'T DELETE
+            services.AddRazorPages(options =>
+            {
+                //options.Conventions.AuthorizePage("/Contact");
+                options.Conventions.AuthorizeFolder("/Admin");
+                //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
+                options.Conventions.AllowAnonymousToFolder("/Views/");
+            });
+
+
             services.AddScoped<ICrashRepository, EFCrashRepository>();
             services.AddServerSideBlazor();
 
@@ -80,8 +98,8 @@ namespace Authentication
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseAuthentication();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -106,6 +124,7 @@ namespace Authentication
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/admin/{*catchall}", "/admin/Index");
             });
+
         }
     }
 }
