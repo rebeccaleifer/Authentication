@@ -1,39 +1,39 @@
 ﻿@*@inherits LayoutComponentBase
 
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Admin</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                </ul>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Admin</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row p-2">
+            <div>
+                @Body
             </div>
         </div>
-    </nav>
-</header>
-
-<div class="container-fluid">
-    <div class="row p-2">
-        <div>
-            @Body
-        </div>
-    </div>
-</div>*@
-
-
-
+    </div>*@
 
 
 
 
 @inherits LayoutComponentBase
+@*@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager*@
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,39 +49,77 @@
     <!--Custom Tab Icon-->
     <link rel="icon" href="~/img/ucdLogo.png" />
 </head>
-
-@*EXAMPLE FROM THE BOOKSTORE PROJECT
-        <div class="d-grid gap-2">
-        <NavLink class="btn btn-outline-primary" href="/admin/books"
-                 ActiveClass="btn-primary text-white" Match="NavLinkMatch.Prefix">Books</NavLink>
-        <br />
-        <br />
-        <NavLink class="btn btn-outline-primary" href="/admin/orders"
-                 ActiveClass="btn-primary text-white" Match="NavLinkMatch.Prefix">Orders</NavLink>
-    </div>*@
-
-<header style="background-color: white;">
-    <div class="container" style="width: 80%; margin: 0 auto;">
-
-        <img src="~/img/minLogo.png" alt="logo" class="logo" style="float: left; padding: 10px 0;" />
-
-        <nav style="float: right;">
-            <ul>
-                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                @*<li><NavLink href="/admin">Home</NavLink></li>
-                <li><NavLink href="/admin/Crashes">Crashes</NavLink></li>*@
-                <li><a asp-area="" asp-controller="Home" asp-action="Temp">Crashes</a></li>
-                <li><a asp-area="" asp-controller="Home" asp-action="SignIn">Crash Severity Calculator</a></li>
-                <li><a asp-area="" asp-controller="Home" asp-action="SignIn">Logout</a></li>
-            </ul>
-
-        </nav>
-        <br />
-
-    </div>
-</header>
-<br />
 <body>
+
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                @*<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Authentication</a>*@
+                <img src="/img/minLogo.png" alt="logo" class="logo" style="float: left; padding: 10px 0;" />
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/">Return Home</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <br />
+
+
+
+
+
+
+
+
+
+
+
+
+    @*<header style="background-color: white;">
+        <div class="container" style="width: 80%; margin: 0 auto;">
+
+            <img src="/img/minLogo.png" alt="logo" class="logo" style="float: left; padding: 10px 0;" />
+
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" style="float: right;">
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+
+                    <ul class="navbar">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/">Return Home</a>
+                        </li>*@
+                        @*<li class="nav-item">
+                                <a class="nav-link text-dark" href="/admin" title="Crash Data">Crash Data</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Inference" asp-action="Calculator">Crash Predictor</a>
+                            </li>*@
+                        @*<li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                                </form>
+                            </li>*@
+                    @*</ul>
+                </div>
+
+            </nav>
+            <br />
+
+        </div>
+    </header>*@
+    <br />
 
     <div class="container-fluid">
         <div class="row p-2">

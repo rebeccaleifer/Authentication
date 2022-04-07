@@ -4,136 +4,146 @@
 
 @model PredictionViewModel
 
-<div class="container text-center rounded shadow-lg" style="background-color: white; padding: 30px;">
-    <form method="post" asp-controller="Inference" asp-action="Score">
-        <div class="container text-center rounded shadow-lg" style="background-color: white; padding-top: 20px; padding-bottom: 10px; width: 60%;">
-            <h2>Predict the Severity of a Crash</h2>
-            <h4>Predictions are based on the following 1-5 scale:</h4>
-            <ul>
-                <li style="list-style: none;">1: No injury</li>
-                <li style="list-style: none;">2: Possible injury</li>
-                <li style="list-style: none;">3: Suspected minor injury</li>
-                <li style="list-style: none;">4: Suspected serious injury</li>
-                <li style="list-style: none;">5: Fatal</li>
-            </ul>
-        </div>
-        <br /><br />
+    <h2 style="text-align: center;">Crash Predictor</h2>
+<br /><br />
+      <form method="post" asp-controller="Inference" asp-action="Score">
+          @if (Model?.Prediction.PredictedValue is null)
+          {
+              
+          }
+
+          else
+          {
+              <div class="container text-center rounded shadow-lg" style="background-color: white; padding-top: 20px; padding-bottom: 10px; width: 60%;">
+                  <h2>Predicted Level of Severity: <div style="color:red;">@Model?.Prediction.PredictedValue</div></h2>
+              </div>
+              <br /><br />
+          }
+
+          <div class="container text-center rounded shadow-lg" style="background-color: white; padding-top: 20px; padding-bottom: 10px; width: 60%;">
+
+              <h4>Predictions are based on the following 1-5 scale:</h4>
+              <ul>
+                  <li style="list-style: none;">1: No injury</li>
+                  <li style="list-style: none;">2: Possible injury</li>
+                  <li style="list-style: none;">3: Suspected minor injury</li>
+                  <li style="list-style: none;">4: Suspected serious injury</li>
+                  <li style="list-style: none;">5+: Fatal</li>
+              </ul>
+          </div>
+
+          <br /><br />
+
+          <input type="hidden" asp-for="@Model.PredictorData.route" value=2082.00000 />
+          <input type="hidden" asp-for="@Model.PredictorData.milepoint" value=2.702000 />
+          <input type="hidden" asp-for="@Model.PredictorData.lat_utm_y" value=4.483701e+06 />
+          <input type="hidden" asp-for="@Model.PredictorData.long_utm_x" value=427458.669400 />
+          <input type="hidden" asp-for="@Model.PredictorData.county_name_Other" value=0 />
 
 
-        <input type="hidden" asp-for="@Model.PredictorData.route" value=2082.00000 />
-        <input type="hidden" asp-for="@Model.PredictorData.milepoint" value=2.702000 />
-        <input type="hidden" asp-for="@Model.PredictorData.lat_utm_y" value=4.483701e+06 />
-        <input type="hidden" asp-for="@Model.PredictorData.long_utm_x" value=427458.669400 />
-        <input type="hidden" asp-for="@Model.PredictorData.county_name_Other" value=0 />
+          @*<p>option1 </p>
+        <input type="radio" name="option1" value="0" id="Select" />Select
+        <input type="radio" name="option1" value="1" id="coffee" />Coffee
+        <p>option2</p>
+        <input type="radio" name="option2" value="0" id="Select" />Select
+        <input type="radio" name="option2" value="1" id="White" />White
+        <input type="radio" name="option2" value="2" id="Black" />Black
+        <p>option3</p>
+        <input type="radio" name="option3" value="0" id="Select" />Select
+        <input type="radio" name="option3" value="1" id="std" />STD
+        <input type="radio" name="option3" value="2" id="300" />300
+        <input type="radio" name="option3" value="3" id="500" />500*@
+
+          @*<label>Pedestrian Involved</label>
+        <input type="radio" name="option1" asp-for="@Model.PredictorData.pedestrian_involved" value="1" id="True" />True
+        <input type="radio" name="option1" asp-for="@Model.PredictorData.pedestrian_involved" value="0" id="False" />False
+        <br />
+        <label>Motorcycle Involved</label>
+        <input type="radio" name="option2" asp-for="@Model.PredictorData.motorcycle_involved" value="1" id="True" />True
+        <input type="radio" name="option2" asp-for="@Model.PredictorData.motorcycle_involved" value="0" id="False" />False
+        <br />
+        <label>Improper Restraint</label>
+        <input type="radio" name="option3" asp-for="@Model.PredictorData.improper_restraint" value="1" id="True" />True
+        <input type="radio" name="option3" asp-for="@Model.PredictorData.improper_restraint" value="0" id="False" />False
+        <br />*@
+
+          <div class="container text-center rounded shadow-lg" style="background-color: white; padding-top: 20px; padding-bottom: 10px; width: 60%;">
+              <h2>Enter a Scenario</h2>
+              <label>Pedestrian Involved</label>
+              <select type="checkbox" asp-for="@Model.PredictorData.pedestrian_involved">
+                  <option value="0">No</option>
+                  <option value="1">Yes</option>
+              </select> <br>
+
+              <label>Motorcycle Involved</label>
+              <select asp-for="@Model.PredictorData.motorcycle_involved">
+                  <option type="checkbox" value="0">No</option>
+                  <option value="1">Yes</option>
+              </select> <br>
+
+              <label>Improper Restraint</label>
+              <select asp-for="@Model.PredictorData.improper_restraint">
+                  <option value="0">No</option>
+                  <option value="1">Yes</option>
+              </select> <br>
+
+              <label>DUI</label>
+              <select asp-for="@Model.PredictorData.dui">
+                  <option value="0">No</option>
+                  <option value="1">Yes</option>
+              </select> <br>
+
+              <label>Intersection Related</label>
+              <select asp-for="@Model.PredictorData.intersection_related">
+                  <option value="0">No</option>
+                  <option value="1">Yes</option>
+              </select> <br>
+
+              <label>Overturn or Rollover</label>
+              <select asp-for="@Model.PredictorData.overturn_rollover">
+                  <option value="0">No</option>
+                  <option value="1">Yes</option>
+              </select> <br>
+
+              <label>Teenage Driver Involved</label>
+              <select asp-for="@Model.PredictorData.teenage_driver_involved">
+                  <option value="0">No</option>
+                  <option value="1">Yes</option>
+              </select> <br>
+
+              <label>Older Driver Involved</label>
+              <select asp-for="@Model.PredictorData.older_driver_involved">
+                  <option value="0">No</option>
+                  <option value="1">Yes</option>
+              </select> <br>
+
+              <label>Dark Night Condition</label>
+              <select asp-for="@Model.PredictorData.night_dark_condition">
+                  <option value="0">No</option>
+                  <option value="1">Yes</option>
+              </select> <br>
+
+              <label>Single Vehicle</label>
+              <select asp-for="@Model.PredictorData.single_vehicle">
+                  <option value="0">No</option>
+                  <option value="1">Yes</option>
+              </select> <br>
+
+              <label>Distracted Driving</label>
+              <select asp-for="@Model.PredictorData.distracted_driving">
+                  <option value="0">No</option>
+                  <option value="1">Yes</option>
+              </select> <br><br />
 
 
-        @*<p>option1 </p>
-            <input type="radio" name="option1" value="0" id="Select" />Select
-            <input type="radio" name="option1" value="1" id="coffee" />Coffee
-            <p>option2</p>
-            <input type="radio" name="option2" value="0" id="Select" />Select
-            <input type="radio" name="option2" value="1" id="White" />White
-            <input type="radio" name="option2" value="2" id="Black" />Black
-            <p>option3</p>
-            <input type="radio" name="option3" value="0" id="Select" />Select
-            <input type="radio" name="option3" value="1" id="std" />STD
-            <input type="radio" name="option3" value="2" id="300" />300
-            <input type="radio" name="option3" value="3" id="500" />500*@
+              <span class="card-text">
+                  <button type="submit" class="btn btn-success btn-sm float-end">Generate Prediction</button>
+              </span>
+          </div>
 
-        @*<label>Pedestrian Involved</label>
-            <input type="radio" name="option1" asp-for="@Model.PredictorData.pedestrian_involved" value="1" id="True" />True
-            <input type="radio" name="option1" asp-for="@Model.PredictorData.pedestrian_involved" value="0" id="False" />False
-            <br />
-            <label>Motorcycle Involved</label>
-            <input type="radio" name="option2" asp-for="@Model.PredictorData.motorcycle_involved" value="1" id="True" />True
-            <input type="radio" name="option2" asp-for="@Model.PredictorData.motorcycle_involved" value="0" id="False" />False
-            <br />
-            <label>Improper Restraint</label>
-            <input type="radio" name="option3" asp-for="@Model.PredictorData.improper_restraint" value="1" id="True" />True
-            <input type="radio" name="option3" asp-for="@Model.PredictorData.improper_restraint" value="0" id="False" />False
-            <br />*@
-
-        <div class="container text-center rounded shadow-lg" style="background-color: white; padding-top: 20px; padding-bottom: 10px; width: 60%;">
-            <h2>Enter a Scenario</h2>
-            <label>Pedestrian Involved</label>
-            <select type="checkbox" asp-for="@Model.PredictorData.pedestrian_involved">
-                <option value="0">No</option>
-                <option value="1">Yes</option>
-            </select> <br>
-
-            <label>Motorcycle Involved</label>
-            <select asp-for="@Model.PredictorData.motorcycle_involved">
-                <option type="checkbox" value="0">No</option>
-                <option value="1">Yes</option>
-            </select> <br>
-
-            <label>Improper Restraint</label>
-            <select asp-for="@Model.PredictorData.improper_restraint">
-                <option value="0">No</option>
-                <option value="1">Yes</option>
-            </select> <br>
-
-            <label>DUI</label>
-            <select asp-for="@Model.PredictorData.dui">
-                <option value="0">No</option>
-                <option value="1">Yes</option>
-            </select> <br>
-
-            <label>Intersection Related</label>
-            <select asp-for="@Model.PredictorData.intersection_related">
-                <option value="0">No</option>
-                <option value="1">Yes</option>
-            </select> <br>
-
-            <label>Overturn or Rollover</label>
-            <select asp-for="@Model.PredictorData.overturn_rollover">
-                <option value="0">No</option>
-                <option value="1">Yes</option>
-            </select> <br>
-
-            <label>Teenage Driver Involved</label>
-            <select asp-for="@Model.PredictorData.teenage_driver_involved">
-                <option value="0">No</option>
-                <option value="1">Yes</option>
-            </select> <br>
-
-            <label>Older Driver Involved</label>
-            <select asp-for="@Model.PredictorData.older_driver_involved">
-                <option value="0">No</option>
-                <option value="1">Yes</option>
-            </select> <br>
-
-            <label>Dark Night Condition</label>
-            <select asp-for="@Model.PredictorData.night_dark_condition">
-                <option value="0">No</option>
-                <option value="1">Yes</option>
-            </select> <br>
-
-            <label>Single Vehicle</label>
-            <select asp-for="@Model.PredictorData.single_vehicle">
-                <option value="0">No</option>
-                <option value="1">Yes</option>
-            </select> <br>
-
-            <label>Distracted Driving</label>
-            <select asp-for="@Model.PredictorData.distracted_driving">
-                <option value="0">No</option>
-                <option value="1">Yes</option>
-            </select> <br><br />
-
-
-            <span class="card-text">
-                <button type="submit" class="btn btn-success btn-sm float-end">Generate Prediction</button>
-            </span>
-        </div>
-
-        <br /><br />
-        <div class="container text-center rounded shadow-lg" style="background-color: white; padding-top: 20px; padding-bottom: 10px; width: 60%;">
+          @*<div class="container text-center rounded shadow-lg" style="background-color: white; padding-top: 20px; padding-bottom: 10px; width: 60%;">
             <h3>Predicted Level of Severity: @Model?.Prediction.PredictedValue</h3>
-        </div>
-    </form>
+        </div>*@
+      </form>
     <br />
-</div>
-<br /><br /><br />
-
-
+    <br />
