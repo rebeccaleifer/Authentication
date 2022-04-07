@@ -88,6 +88,11 @@ namespace Authentication
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
+            }
 
 
             //This redirects HTTP traffic to HTTPS :)

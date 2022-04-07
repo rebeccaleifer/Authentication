@@ -9,13 +9,45 @@
       <form method="post" asp-controller="Inference" asp-action="Score">
           @if (Model?.Prediction.PredictedValue is null)
           {
-              
+
           }
 
-          else
+          else if (Model?.Prediction.PredictedValue >= 5)
           {
               <div class="container text-center rounded shadow-lg" style="background-color: white; padding-top: 20px; padding-bottom: 10px; width: 60%;">
                   <h2>Predicted Level of Severity: <div style="color:red;">@Model?.Prediction.PredictedValue</div></h2>
+              </div>
+              <br /><br />
+          }
+
+          else if (Model?.Prediction.PredictedValue >= 4)
+          {
+              <div class="container text-center rounded shadow-lg" style="background-color: white; padding-top: 20px; padding-bottom: 10px; width: 60%;">
+                  <h2>Predicted Level of Severity: <div style="color:#DE8F43;">@Model?.Prediction.PredictedValue</div></h2>
+              </div>
+              <br /><br />
+          }
+
+          else if (Model?.Prediction.PredictedValue >= 3)
+          {
+              <div class="container text-center rounded shadow-lg" style="background-color: white; padding-top: 20px; padding-bottom: 10px; width: 60%;">
+                  <h2>Predicted Level of Severity: <div style="color:#EFCC45;">@Model?.Prediction.PredictedValue</div></h2>
+              </div>
+              <br /><br />
+          }
+
+          else if (Model?.Prediction.PredictedValue >= 2)
+          {
+              <div class="container text-center rounded shadow-lg" style="background-color: white; padding-top: 20px; padding-bottom: 10px; width: 60%;">
+                  <h2>Predicted Level of Severity: <div style="color:#19417F;">@Model?.Prediction.PredictedValue</div></h2>
+              </div>
+              <br /><br />
+          }
+
+          else if (Model?.Prediction.PredictedValue >= 0)
+          {
+              <div class="container text-center rounded shadow-lg" style="background-color: white; padding-top: 20px; padding-bottom: 10px; width: 60%;">
+                  <h2>Predicted Level of Severity: <div style="color:green;">@Model?.Prediction.PredictedValue</div></h2>
               </div>
               <br /><br />
           }
@@ -24,11 +56,11 @@
 
               <h4>Predictions are based on the following 1-5 scale:</h4>
               <ul>
-                  <li style="list-style: none;">1: No injury</li>
-                  <li style="list-style: none;">2: Possible injury</li>
-                  <li style="list-style: none;">3: Suspected minor injury</li>
-                  <li style="list-style: none;">4: Suspected serious injury</li>
-                  <li style="list-style: none;">5+: Fatal</li>
+                  <li style="list-style: none; color: green">1: No injury</li>
+                  <li style="list-style: none; color: #19417F;">2: Possible injury</li>
+                  <li style="list-style: none; color: #EFCC45 ">3: Suspected minor injury</li>
+                  <li style="list-style: none; color: #DE8F43">4: Suspected serious injury</li>
+                  <li style="list-style: none; color: red;">5+: Fatal</li>
               </ul>
           </div>
 
