@@ -3,47 +3,77 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Authentication</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/custom.css" />
+
+    <!--Custom Tab Icon-->
+    <link rel="icon" href="~/img/ucdLogo.png" />
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Authentication</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+    @*<header id="top">
+            <nav class="navbar navbar-expand navbar-toggleable navbar-dark bg-white border-bottom shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Drive Safe Utah</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Temp">Temp</a>
+                            </li>
+                            <li class="nav-item">
+                                <btn class="btn btn-outline-primary" asp-area="" asp-controller="Home" asp-action="SignIn" style="margin-left: 750px; cursor: pointer;">Sign In</btn>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+            </nav>
+            <br />
+        </header>*@
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - Authentication - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <header style="background-color: white;">
+        <div class="container" style="width: 80%; margin: 0 auto;">
+
+            <img src="~/img/minLogo.png" alt="logo" class="logo" style="float: left; padding: 10px 0;" />
+
+            <nav style="float: right;">
+                <ul>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Temp">Crashes</a></li>
+                    <li><a asp-area="" asp-controller="Inference" asp-action="Calculator">Crash Severity Calculator</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="SignIn">Login</a></li>
+
+                </ul>
+
+            </nav>
+            <br />
+
         </div>
-    </footer>
+    </header>
+    <br />
+
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+    <footer class="border-top footer text-muted shadow-sm" style="background-color: white;">
+
+        <div class="container " style="text-align: center;">
+            &copy; Yeet- Intex 2022 <a asp-area="" asp-controller="Home" asp-action="PrivacyPolicy">Privacy & Cookies</a>
+        </div>
+    </footer>
 </body>
 </html>
