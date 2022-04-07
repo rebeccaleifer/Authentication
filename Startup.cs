@@ -44,7 +44,7 @@ namespace Authentication
                     IConfigurationSection googleAuthNSection =
                         Configuration.GetSection("Authentication:Google");
 
-                    options.ClientId = googleAuthNSection["ClientId"];
+                    options.ClientId = googleAuthNSection["ClientID"];
                     options.ClientSecret = googleAuthNSection["ClientSecret"];
                 });
 
