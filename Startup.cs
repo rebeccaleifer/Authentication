@@ -44,8 +44,8 @@ namespace Authentication
                     IConfigurationSection googleAuthNSection =
                         Configuration.GetSection("Authentication:Google");
 
-                    options.ClientId = googleAuthNSection["ClientID"];
-                    options.ClientSecret = googleAuthNSection["ClientSecret"];
+                    options.ClientId = "1079177695201-84d6jbs47qv6pg4pi2fs210ph5j6hvg9.apps.googleusercontent.com";
+                    options.ClientSecret = "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";
                 });
 
             services.AddDbContext<CrashDbContext>(options =>
@@ -74,7 +74,7 @@ namespace Authentication
             services.AddServerSideBlazor();
 
             services.AddSingleton<InferenceSession>(
-                new InferenceSession("Models/utah_crash_severity.onnx")
+                new InferenceSession("wwwroot/utah_crash_severity.onnx")
             );
 
             //THIS IS A TEST
