@@ -1,4 +1,6 @@
 ﻿using Authentication.Models;
+using Authentication.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,29 +11,48 @@ using System.Threading.Tasks;
 
 namespace Authentication.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private ICrashRepository repo;
+        public HomeController(ICrashRepository temp)
         {
-            _logger = logger;
+            repo = temp;
         }
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult Privacy()
+        [AllowAnonymous]
+        public IActionResult PrivacyPolicy()
+        {
+            return View("PrivacyPolicy");
+        }
+        public IActionResult SignIn()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [AllowAnonymous]
+        public IActionResult Temp(int pageNum)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            int pageSize = 10;
+
+            //var temp = repo.Crashes.Take(10).ToList();
+            var temp = new CrashesViewModel
+            {
+                Crashes = repo.Crashes.Skip((pageNum - 1) * pageSize).Take(pageSize).ToList(),
+
+                PageInfo = new PageInfo
+                {
+                    TotalNumCrashes = (repo.Crashes.Count()),
+                    CrashesPerPage = pageSize,
+                    CurrentPage = pageNum
+                }
+            };
+
+            return View(temp);
         }
     }
 }
