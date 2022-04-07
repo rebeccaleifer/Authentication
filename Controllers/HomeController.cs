@@ -34,25 +34,25 @@ namespace Authentication.Controllers
             return View();
         }
 
-        [AllowAnonymous]
-        public IActionResult Temp(int pageNum)
-        {
-            int pageSize = 10;
+        //[AllowAnonymous]
+        //public IActionResult Temp(int pageNum)
+        //{
+        //    int pageSize = 10;
 
             //var temp = repo.Crashes.Take(10).ToList();
-            var temp = new CrashesViewModel
-            {
-                Crashes = repo.Crashes.Skip((pageNum - 1) * pageSize).Take(pageSize).ToList(),
+            //var temp = new CrashesViewModel
+            //{
+            //    Crashes = repo.Crashes.Skip((pageNum - 1) * pageSize).Take(pageSize).ToList(),
 
-                PageInfo = new PageInfo
-                {
-                    TotalNumCrashes = (repo.Crashes.Count()),
-                    CrashesPerPage = pageSize,
-                    CurrentPage = pageNum
-                }
-            };
+            //    PageInfo = new PageInfo
+            //    {
+            //        TotalNumCrashes = (repo.Crashes.Count()),
+            //        CrashesPerPage = pageSize,
+            //        CurrentPage = pageNum
+            //    }
+            //};
 
-            return View(temp);
-        }
+            //return View(temp);
+        //}
     }
 }
