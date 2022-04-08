@@ -38,15 +38,15 @@ namespace Authentication
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-            services.AddAuthentication()
-                .AddGoogle(options =>
-                {
-                    IConfigurationSection googleAuthNSection =
-                        Configuration.GetSection("Authentication:Google");
+            //services.AddAuthentication()
+            //    .AddGoogle(options =>
+            //    {
+            //        IConfigurationSection googleAuthNSection =
+            //            Configuration.GetSection("Authentication:Google");
 
-                    options.ClientId = "1079177695201-84d6jbs47qv6pg4pi2fs210ph5j6hvg9.apps.googleusercontent.com";
-                    options.ClientSecret = "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";
-                });
+            //        options.ClientId = "1079177695201-84d6jbs47qv6pg4pi2fs210ph5j6hvg9.apps.googleusercontent.com";
+            //        options.ClientSecret = "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";
+            //    });
 
             services.AddDbContext<CrashDbContext>(options =>
 
@@ -77,9 +77,21 @@ namespace Authentication
                 new InferenceSession("wwwroot/utah_crash_severity.onnx")
             );
 
-            //THIS IS A TEST
+            //MFA
             services.AddAuthorization(options =>
                 options.AddPolicy("TwoFactorEnabled", x => x.RequireClaim("amr", "mfa")));
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Set Password Requirements
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 1;
+            });
+
         }
         // NEW STUFF (I HOPE THIS WORKS)
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
