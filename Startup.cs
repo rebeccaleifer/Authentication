@@ -101,10 +101,6 @@ namespace Authentication
             }
 
 
-            //This redirects HTTP traffic to HTTPS :)
-            app.UseHttpsRedirection();
-
-
             app.UseStaticFiles();
 
             app.UseRouting();
