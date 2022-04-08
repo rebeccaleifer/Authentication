@@ -1,0 +1,28 @@
+﻿@page "/admin/crashes/delete/{id:long}"
+
+<h2>Confirm Deletion</h2>
+<h3>Are you sure you want to delete the record of @c.CRASH_ID?</h3>
+
+<NavLink class="btn btn-warning" @onclick="(x => RemoveCrash(c))" href="/admin/crashes">Delete</NavLink>
+<NavLink class="btn btn-secondary" href="/admin/crashes">Cancel</NavLink>
+
+@code {
+
+    [Inject]
+    public ICrashRepository repo { get; set; }
+
+    [Parameter]
+    public long Id { get; set; }
+
+    public Crash c { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        c = repo.Crashes.FirstOrDefault(x => x.CRASH_ID == Id);
+    }
+
+    public void RemoveCrash(Crash c)
+    {
+        repo.DeleteCrash(c);
+    }
+}

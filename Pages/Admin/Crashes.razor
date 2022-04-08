@@ -244,8 +244,12 @@
                             <NavLink class="btn btn-warning btn-sm" href="@GetEditUrl(c.CRASH_ID)">Edit</NavLink>
                         </td>
 
-                        <td>
+                        @*<td>
                             <button class="btn btn-danger btn-sm" @onclick="@(x => RemoveCrash(c))">Delete</button>
+                        </td>*@
+
+                        <td>
+                            <NavLink class="btn btn-warning btn-sm" href="@GetDeleteUrl(c.CRASH_ID)">Delete</NavLink>
                         </td>
                     </tr>
                 }
@@ -514,12 +518,7 @@
 
     public string GetDetailsUrl(long id) => $"/admin/crashes/details/{id}";
     public string GetEditUrl(long id) => $"/admin/crashes/edit/{id}";
-
-    public async Task RemoveCrash(Crash c)
-    {
-        repo.DeleteCrash(c);
-        await UpdateData();
-    }
+    public string GetDeleteUrl(long id) => $"/admin/crashes/delete/{id}";
 
     public async Task Next()
     {
