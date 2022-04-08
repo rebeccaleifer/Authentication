@@ -1,6 +1,4 @@
 ﻿@page "/crashdata/crashes/details/{id:long}"
-@using Microsoft.ML.OnnxRuntime;
-@using Microsoft.ML.OnnxRuntime.Tensors;
 
 <h3 class="bg-info text-white text-center p-1">Details</h3>
 
@@ -40,7 +38,6 @@
                 <td>Fatal</td>
             }
         </tr>
-        <tr><th>Predicted Crash Severity:</th><td>@pvm.Prediction.PredictedValue</td></tr>
         <tr><th>Work Zone Related:</th><td>@c.WORK_ZONE_RELATED</td></tr>
         <tr><th>Pedestrian Involved:</th><td>@c.PEDESTRIAN_INVOLVED</td></tr>
         <tr><th>Bicyclist Involved:</th><td>@c.BICYCLIST_INVOLVED</td></tr>
@@ -72,50 +69,10 @@
     [Parameter]
     public long Id { get; set; }
 
-    private InferenceSession _session;
-
     public Crash c { get; set; }
-
-    public PredictionViewModel pvm { get; set; }
 
     protected override void OnParametersSet()
     {
         c = repo.Crashes.FirstOrDefault(x => x.CRASH_ID == Id);
-
-        pvm.PredictorData.distracted_driving = Convert.ToSingle(c.DISTRACTED_DRIVING);
-        pvm.PredictorData.dui = Convert.ToSingle(c.DUI);
-        pvm.PredictorData.improper_restraint = Convert.ToSingle(c.IMPROPER_RESTRAINT);
-        pvm.PredictorData.intersection_related = Convert.ToSingle(c.INTERSECTION_RELATED);
-        pvm.PredictorData.lat_utm_y = c.LAT_UTM_Y;
-        pvm.PredictorData.long_utm_x = c.LONG_UTM_X;
-        pvm.PredictorData.milepoint = c.MILEPOINT;
-        pvm.PredictorData.motorcycle_involved = Convert.ToSingle(c.MOTORCYCLE_INVOLVED);
-        pvm.PredictorData.night_dark_condition = Convert.ToSingle(c.NIGHT_DARK_CONDITION);
-        pvm.PredictorData.older_driver_involved = Convert.ToSingle(c.OLDER_DRIVER_INVOLVED);
-        pvm.PredictorData.route = Convert.ToSingle(c.ROUTE);
-        pvm.PredictorData.overturn_rollover = Convert.ToSingle(c.OVERTURN_ROLLOVER);
-        pvm.PredictorData.pedestrian_involved = Convert.ToSingle(c.PEDESTRIAN_INVOLVED);
-        pvm.PredictorData.single_vehicle = Convert.ToSingle(c.SINGLE_VEHICLE);
-        pvm.PredictorData.teenage_driver_involved = Convert.ToSingle(c.TEENAGE_DRIVER_INVOLVED);
-        if ((c.COUNTY_NAME != "UTAH") && (c.COUNTY_NAME != "WEBER") && (c.COUNTY_NAME != "SALT LAKE"))
-        {
-            pvm.PredictorData.county_name_Other = 1;
-        }
-        else
-        {
-            pvm.PredictorData.county_name_Other = 0;
-        }
-
-    }
-
-    public void Score(PredictionViewModel pvm)
-    {
-        var result = _session.Run(new List<NamedOnnxValue>
-        {
-                NamedOnnxValue.CreateFromTensor("float_input", pvm.PredictorData.AsTensor())
-            });
-        Tensor<float> score = result.First().AsTensor<float>();
-        pvm.Prediction.PredictedValue = score.First();
-        result.Dispose();
     }
 }
