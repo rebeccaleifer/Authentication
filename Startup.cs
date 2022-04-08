@@ -29,35 +29,42 @@ namespace Authentication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddMvc();
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(
+            //        Configuration.GetConnectionString("DefaultConnection")));
+            
             services.AddDefaultIdentity<IdentityUser>(options =>
                 options.SignIn.RequireConfirmedAccount = true)
                     .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-            //services.AddAuthentication()
-            //    .AddGoogle(options =>
-            //    {
-            //        IConfigurationSection googleAuthNSection =
-            //            Configuration.GetSection("Authentication:Google");
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    IConfigurationSection googleAuthNSection =
+                        Configuration.GetSection("Authentication:Google");
 
-            //        options.ClientId = "1079177695201-84d6jbs47qv6pg4pi2fs210ph5j6hvg9.apps.googleusercontent.com";
-            //        options.ClientSecret = "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";
-            //    });
+                    options.ClientId = "1079177695201-84d6jbs47qv6pg4pi2fs210ph5j6hvg9.apps.googleusercontent.com";
+                    options.ClientSecret = "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";
+                });
 
             services.AddDbContext<CrashDbContext>(options =>
 
                 options.UseMySql(Configuration.GetConnectionString("CrashDataDbConnection"))
             );
 
+            services.AddDbContext<ApplicationDbContext>(options =>
+
+                options.UseMySql(Configuration.GetConnectionString("ApplicationDataDbConnection"))
+            );
+
             //services.AddIdentity<IdentityUser, IdentityRole>()
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(Configuration["ConnectionStrings: ApplicationDataDbConnection"]));
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseMySql(Configuration["ConnectionStrings: ApplicationDataDbConnection"]));
 
             services.AddControllersWithViews();
             //services.AddRazorPages();
@@ -117,6 +124,8 @@ namespace Authentication
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            //app.UseMvcWithDefaultRoute();
 
             app.UseEndpoints(endpoints =>
             {
